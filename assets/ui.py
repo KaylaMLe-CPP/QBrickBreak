@@ -1,7 +1,8 @@
 from . import globals, resources
 
+
 def draw_statevector_grid(screen):
-    font=resources.Font()
+    font = resources.Font()
     basis_states = [
         '|000>',
         '|001>',
@@ -12,8 +13,11 @@ def draw_statevector_grid(screen):
         '|110>',
         '|111>'
     ]
+
+    # control state vector size to match display size
     statevector_height = int(round(globals.FIELD_HEIGHT / len(basis_states)))
 
+    # print state vectors on right side of screen
     for i in range(len(basis_states)):
         text = font.vector_font.render(basis_states[i], 1, globals.WHITE)
         screen.blit(text, (globals.WINDOW_WIDTH - text.get_width(),
