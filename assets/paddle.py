@@ -20,5 +20,7 @@ class Paddle(pygame.sprite.Sprite):
 class QuantumPaddles:
     def __init__(self, x_pos) -> None:
         self.paddles = []
+        # for each state, add a classical paddle
+        # state vector -> y position
         for i in range(2**globals.NUM_QUBITS):
             self.paddles.append(Paddle(x_pos, i*globals.PADDLE_HEIGHT))
