@@ -16,7 +16,7 @@ class Ball(pygame.sprite.Sprite):
 
         self.velocity = [1, 2]  # initial movement direction
         self.initial_speed = 2
-        self.reset(-1)
+        self.reset(1)
 
     # moves the ball based on the velocity
     def update(self):
@@ -26,6 +26,11 @@ class Ball(pygame.sprite.Sprite):
         # if top/bottom edge is detected, flip direction
         if self.rect.y < 0 or self.rect.y > globals.FIELD_HEIGHT - globals.WIDTH_UNIT:
             self.velocity[1] = -self.velocity[1]
+
+        if self.rect.x < 0:
+            self.reset(1)
+        elif self.rect.x > globals.WINDOW_WIDTH:
+            self.reset(-1)
 
     def bounce(self):
         # reverse x and y velocity, increase speed
