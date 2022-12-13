@@ -19,7 +19,7 @@ class Ball(pygame.sprite.Sprite):
         self.reset(1)
 
     # moves the ball based on the velocity
-    def update(self):
+    def update(self, classical_computer, quantum_computer):
         self.rect.x += self.velocity[0]
         self.rect.y += self.velocity[1]
 
@@ -29,8 +29,11 @@ class Ball(pygame.sprite.Sprite):
 
         if self.rect.x < 0:
             self.reset(1)
+            quantum_computer.score += 1
+            
         elif self.rect.x > globals.WINDOW_WIDTH:
             self.reset(-1)
+            classical_computer.score += 1
 
     def bounce(self):
         # reverse x and y velocity, increase speed
