@@ -21,6 +21,7 @@ def main():
     circuit_grid = CircuitGrid(5, globals.FIELD_HEIGHT)
     pong_ball = ball.Ball()
     classical_computer = computer.ClassicalComputer(classical_paddle)
+    quantum_computer = computer.QuantumComputer(quantum_paddles, circuit_grid)
 
     moving_sprites = pygame.sprite.Group()
     moving_sprites.add(classical_paddle)
@@ -38,6 +39,7 @@ def main():
 
         pong_ball.update()
         classical_computer.update(pong_ball)
+        quantum_computer.update(pong_ball)
 
         # draw game
         screen.fill(globals.BLACK)  # erase current frame
