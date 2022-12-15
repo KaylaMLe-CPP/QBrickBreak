@@ -14,6 +14,12 @@ class Brick(pygame.sprite.Sprite):
         self.rect.x = x_pos
         self.rect.y = y_pos
 
+    def disintegrate(self):
+        self.image.set_alpha(0)
+    
+    def is_gone(self):
+        return self.image.get_alpha() == 0
+
 
 class Qubricks:
     def __init__(self, x_pos) -> None:

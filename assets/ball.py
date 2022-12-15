@@ -30,7 +30,7 @@ class Ball(pygame.sprite.Sprite):
         if self.rect.x < 0:
             self.reset(1)
             quantum_computer.score += 1
-            
+
         elif self.rect.x > globals.WINDOW_WIDTH:
             self.reset(-1)
             classical_computer.score += 1
@@ -41,7 +41,9 @@ class Ball(pygame.sprite.Sprite):
         self.velocity[1] = -self.velocity[1] * 1.5
 
     def reset(self, direction):
-        self.rect.centerx = globals.WINDOW_WIDTH / 2
+        # the ball starts on the classical computer side
+        self.rect.centerx = (globals.WINDOW_WIDTH / 2) - \
+            (globals.PADDLE_HEIGHT)
         self.rect.centery = globals.FIELD_HEIGHT / 2
 
         if direction > 0:
