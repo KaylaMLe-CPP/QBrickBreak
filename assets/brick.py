@@ -13,12 +13,14 @@ class Brick(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x_pos
         self.rect.y = y_pos
+        self.last_time_broken = pygame.time.get_ticks() - \
+            globals.MEASUREMENT_COOLDOWN_TIME
 
     def disintegrate(self):
         self.image.set_alpha(0)
-    
-    def is_gone(self):
-        return self.image.get_alpha() == 0
+
+    def is_breakable(self, current_time):
+        return current_time - self.last_time_broken > globals.MEASUREMENT_COOLDOWN_TIME
 
 
 class Qubricks:
