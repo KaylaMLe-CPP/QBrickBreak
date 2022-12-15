@@ -29,10 +29,12 @@ class ClassicalComputer(Computer):
 
 
 class QuantumComputer(Computer):
-    def __init__(self, quantum_paddles, circuit_grid):
+    def __init__(self, quantum_paddles, quantum_bricks, circuit_grid):
         self.paddles = quantum_paddles.paddles
-        self.score = 0
+        self.bricks = quantum_bricks.bricks
         self.circuit_grid = circuit_grid
+
+        self.score = 0
         self.measured_state = 0
         self.last_measurement_time = pygame.time.get_ticks() - \
             globals.MEASUREMENT_COOLDOWN_TIME
@@ -52,7 +54,8 @@ class QuantumComputer(Computer):
             ball.bounce()
 
     def update_before_measurement(self):
-        simulator = qiskit.BasicAer.get_backend("statevector_simulator")
+        simulator = qiskit.BasicAer.get_backend(
+            "statevector_simulator")  # simulated quantum computing
         circuit = self.circuit_grid.model.compute_circuit()
         transpiled_circuit = qiskit.transpile(circuit, simulator)
         statevector = simulator.run(transpiled_circuit, shots=100).result(
@@ -62,6 +65,7 @@ class QuantumComputer(Computer):
         # (fully opaque for 100% certainty to transparent for 0% certainty)
         for basis_state, amplitude in enumerate(statevector):
             self.paddles[basis_state].image.set_alpha(amplitude ** 2 * 255)
+            self.bricks[basis_state].image.set_alpha(amplitude ** 2 * 255)
 
     def update_after_measurement(self):
         simulator = qiskit.BasicAer.get_backend("qasm_simulator")
@@ -76,6 +80,10 @@ class QuantumComputer(Computer):
         # reset all paddles to transparent
         for paddle in self.paddles:
             paddle.image.set_alpha(0)
+            
+        for brick in self.bricks:
+            brick.image.set_alpha(0)
 
         # set most certain paddle to fully opaque
         self.paddles[self.measured_state].image.set_alpha(255)
+        self.bricks[self.measured_state].image.set_alpha(255)
